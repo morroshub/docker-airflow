@@ -1,0 +1,18 @@
+version: '3'
+x-airflow-common:
+  &airflow-common # imagen: ${AIRFLOW_IMAGE_NAME: -apache/airflow:2.1.0} 
+  build: .
+   enviroment: &airflow-common-env
+      AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+      dockerfile: Dockerfile  # Nombre de tu Dockerfile
+    ports:
+      - "8080:8080"  # Puedes cambiar el mapeo de puertos según tus preferencias
+    environment:
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: "sqlite:////root/airflow/airflow.db"  # 
+Configuración de la base de datos, usa SQLite en este caso para simplificar
+      AIRFLOW__CORE__EXECUTOR: "SequentialExecutor"  # Puedes ajustar según el 
+executor que desees utilizar
+
+  # Puedes agregar más servicios según tus necesidades, como bases de datos, 
+servidores web, etc.
+
